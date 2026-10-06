@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>學生隨機抽籤與考試排程系統</title>
+    <title>學生隨機抽籤與考試排程系統 (22人/2題組)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -20,14 +20,14 @@
         /* Shuffle animation styling */
         @keyframes pulseGlow {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.03); opacity: 0.85; }
+            50% { transform: scale(1.02); opacity: 0.85; }
         }
 
         .shuffling {
             animation: pulseGlow 0.15s infinite;
         }
 
-        /* Custom scrollbar for better UI */
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -86,7 +86,6 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Top Navigation Header -->
     <header class="bg-indigo-700 text-white shadow-lg no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
@@ -106,10 +105,9 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        <!-- Top Controls Grid -->
+        <!-- Controls Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 no-print">
             
             <!-- Card 1: Time & Rules Settings -->
@@ -124,7 +122,7 @@
                             <input type="time" id="startTimeInput" value="07:00" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm font-semibold text-slate-700">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-slate-500 mb-1">每人考試時間 (分鐘)</label>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">每人時間 (分鐘)</label>
                             <input type="number" id="durationInput" value="5" min="1" max="60" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm font-semibold text-slate-700">
                         </div>
                     </div>
@@ -138,25 +136,21 @@
             <!-- Card 2: Question Rules Info -->
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
                 <h2 class="text-base font-semibold text-slate-900 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-layer-group text-indigo-600"></i> 試題分配規則
+                    <i class="fa-solid fa-layer-group text-indigo-600"></i> 試題分配規則 (二試題分組)
                 </h2>
                 <div class="space-y-2 text-xs">
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-blue-50 border border-blue-100 text-blue-800">
+                    <div class="flex items-center justify-between p-2.5 rounded-lg bg-blue-50 border border-blue-100 text-blue-800">
                         <span class="font-medium"><i class="fa-solid fa-1"></i> 第一題試題</span>
-                        <span class="font-bold bg-blue-200/70 text-blue-900 px-2 py-0.5 rounded">第 1 ~ 7 人（共 7 人）</span>
+                        <span class="font-bold bg-blue-200/70 text-blue-900 px-2 py-0.5 rounded">第 1 ~ 11 人（共 11 人）</span>
                     </div>
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-800">
+                    <div class="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-800">
                         <span class="font-medium"><i class="fa-solid fa-2"></i> 第二題試題</span>
-                        <span class="font-bold bg-emerald-200/70 text-emerald-900 px-2 py-0.5 rounded">第 8 ~ 14 人（共 7 人）</span>
-                    </div>
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-purple-50 border border-purple-100 text-purple-800">
-                        <span class="font-medium"><i class="fa-solid fa-3"></i> 第三題試題</span>
-                        <span class="font-bold bg-purple-200/70 text-purple-900 px-2 py-0.5 rounded">第 15 ~ 22 人（共 8 人）</span>
+                        <span class="font-bold bg-emerald-200/70 text-emerald-900 px-2 py-0.5 rounded">第 12 ~ 22 人（共 11 人）</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 3: Action & List Edit Modal Trigger -->
+            <!-- Card 3: Action Buttons -->
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between">
                 <div>
                     <h2 class="text-base font-semibold text-slate-900 mb-2 flex items-center justify-between">
@@ -165,7 +159,7 @@
                             <i class="fa-solid fa-pen-to-square"></i> 編輯名單
                         </button>
                     </h2>
-                    <p class="text-xs text-slate-500 mb-3">點擊下方按鈕開始進行全自動隨機分組與時間配對。</p>
+                    <p class="text-xs text-slate-500 mb-3">點擊下方按鈕開始隨機滾動打亂並分配考試順序。</p>
                 </div>
                 <div class="space-y-2">
                     <button id="drawBtn" onclick="startShuffleDraw()" class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold py-3 px-4 rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center gap-2 text-base">
@@ -175,7 +169,6 @@
             </div>
         </div>
 
-        <!-- Results Section Container -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 print-container overflow-hidden">
             <!-- Table Header Toolbar -->
             <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 no-print">
@@ -183,7 +176,7 @@
                     <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
                         <i class="fa-solid fa-list-check text-indigo-600"></i> 抽籤與排程結果
                     </h2>
-                    <p class="text-xs text-slate-500 mt-0.5">試題、序號與時間段已自動依據規範生成</p>
+                    <p class="text-xs text-slate-500 mt-0.5">欄位依據：考試時間段 $\rightarrow$ 順序 $\rightarrow$ 學生姓名 $\rightarrow$ 試題組別</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
                     <button onclick="copyToClipboard()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
@@ -195,13 +188,13 @@
                 </div>
             </div>
 
-            <!-- Print Header Title (Only displays when printed) -->
+            <!-- Print Header Title (Only visible in print) -->
             <div class="hidden print:block p-4 text-center border-b border-slate-300">
                 <h1 class="text-2xl font-bold">學生考試隨機抽籤與時間排程表</h1>
                 <p class="text-sm mt-1" id="printSubHeader">開始時間：07:00 | 每人考試時間：5 分鐘 | 共 22 人</p>
             </div>
 
-            <!-- Table Display -->
+            <!-- Schedule Table -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -213,14 +206,14 @@
                         </tr>
                     </thead>
                     <tbody id="scheduleTableBody" class="divide-y divide-slate-100 text-sm text-slate-700">
-                        <!-- Table rows generated dynamically by JS -->
+                        <!-- Dynamic content filled via JS -->
                     </tbody>
                 </table>
             </div>
 
-            <!-- Table Footer Summary -->
+            <!-- Table Footer Status -->
             <div class="bg-slate-50 p-4 border-t border-slate-100 text-xs text-slate-500 flex justify-between items-center">
-                <span>最後抽籤更新時間：<span id="lastUpdatedText" class="font-medium text-slate-700">未執行</span></span>
+                <span>最後更新時間：<span id="lastUpdatedText" class="font-medium text-slate-700">未執行</span></span>
                 <span id="statusIndicator" class="flex items-center gap-1.5 text-emerald-600 font-medium">
                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 準備就緒
                 </span>
@@ -228,7 +221,6 @@
         </div>
     </main>
 
-    <!-- Edit Students Modal -->
     <div id="studentModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 no-print">
         <div class="bg-white rounded-2xl shadow-xl border border-slate-100 max-w-md w-full p-6 transform transition-all">
             <div class="flex justify-between items-center mb-4">
@@ -257,19 +249,14 @@
         </div>
     </div>
 
-    <!-- Notification Toast -->
+    <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none flex items-center gap-2 z-50">
         <i class="fa-solid fa-circle-check text-emerald-400" id="toastIcon"></i>
         <span id="toastMsg">訊息通知</span>
     </div>
 
-    <!-- Footer -->
-    <footer class="mt-auto py-6 border-t border-slate-200 text-center text-xs text-slate-400 no-print">
-        線上考試隨機抽籤系統 &copy; 2026
-    </footer>
-
     <script>
-        // Default list of 22 students
+        // 22 Students List
         const defaultStudents = [
             "歐陽榮達", "陳嘉漢", "鄭德華", "張駿浩", "張偉達",
             "蔣俊威", "霍駿悅", "霍兆希", "何志良", "何文浩",
@@ -282,17 +269,14 @@
         let currentSchedule = [];
         let isShuffling = false;
 
-        // Initialize application on page load
         window.onload = function() {
             updateTotalStudentCount();
-            generateSchedule(false); // Render initial order without shuffle animation
+            generateSchedule(false);
 
-            // Event listener for inputs changes
             document.getElementById('startTimeInput').addEventListener('change', () => generateSchedule(false));
             document.getElementById('durationInput').addEventListener('input', () => generateSchedule(false));
         };
 
-        // Modal toggle
         function toggleStudentModal() {
             const modal = document.getElementById('studentModal');
             if (modal.classList.contains('hidden')) {
@@ -303,14 +287,12 @@
             }
         }
 
-        // Reset default list
         function resetDefaultStudents() {
             studentsList = [...defaultStudents];
             document.getElementById('studentsTextarea').value = studentsList.join('\n');
             showToast('已還原為預設 22 位學生名單');
         }
 
-        // Save student list from modal
         function saveStudentsFromModal() {
             const text = document.getElementById('studentsTextarea').value;
             const parsed = text.split(/[\n,]+/).map(s => s.trim()).filter(s => s.length > 0);
@@ -324,7 +306,7 @@
             updateTotalStudentCount();
             toggleStudentModal();
             startShuffleDraw();
-            showToast('學生名單已更新並完成重新抽籤');
+            showToast('學生名單已更新並完成抽籤');
         }
 
         function updateTotalStudentCount() {
@@ -338,25 +320,23 @@
             document.getElementById('totalDurationText').innerText = totalMinutes;
         }
 
-        // Determine question type based on sequence position
+        // Question Group Assignment Rule: 1~11 Question 1, 12~22 Question 2
         function getQuestionGroup(index, total) {
-            // Requirement logic for 22 students:
-            // 1~7: 第一題, 8~14: 第二題, 15~22: 第三題
-            // Proportional adjust if list count changes
-            if (total === 22) {
-                if (index <= 7) return { name: "第一題", bg: "bg-blue-50 text-blue-700 border-blue-200", badgeBg: "bg-blue-100 text-blue-800" };
-                if (index <= 14) return { name: "第二題", bg: "bg-emerald-50 text-emerald-700 border-emerald-200", badgeBg: "bg-emerald-100 text-emerald-800" };
-                return { name: "第三題", bg: "bg-purple-50 text-purple-700 border-purple-200", badgeBg: "bg-purple-100 text-purple-800" };
+            const half = Math.ceil(total / 2);
+            if (index <= half) {
+                return {
+                    name: "第一題",
+                    badgeBg: "bg-blue-100 text-blue-800 border-blue-200"
+                };
             } else {
-                // Adaptive breakdown for custom headcount
-                const part = Math.floor(total / 3);
-                if (index <= part) return { name: "第一題", bg: "bg-blue-50 text-blue-700 border-blue-200", badgeBg: "bg-blue-100 text-blue-800" };
-                if (index <= part * 2) return { name: "第二題", bg: "bg-emerald-50 text-emerald-700 border-emerald-200", badgeBg: "bg-emerald-100 text-emerald-800" };
-                return { name: "第三題", bg: "bg-purple-50 text-purple-700 border-purple-200", badgeBg: "bg-purple-100 text-purple-800" };
+                return {
+                    name: "第二題",
+                    badgeBg: "bg-emerald-100 text-emerald-800 border-emerald-200"
+                };
             }
         }
 
-        // Start Shuffle Animation Draw
+        // Shuffle Draw Animation
         function startShuffleDraw() {
             if (isShuffling) return;
             isShuffling = true;
@@ -372,11 +352,10 @@
             statusIndicator.className = "flex items-center gap-1.5 text-amber-600 font-medium";
 
             let iterations = 0;
-            const maxIterations = 18; // Shuffle steps
+            const maxIterations = 18;
             const intervalTime = 70;
 
             const shuffleInterval = setInterval(() => {
-                // Temporary Fisher-Yates shuffle algorithm for animation
                 const tempArr = [...studentsList];
                 for (let i = tempArr.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -389,7 +368,7 @@
                 if (iterations >= maxIterations) {
                     clearInterval(shuffleInterval);
                     
-                    // Final Shuffle
+                    // Final Fisher-Yates Shuffle
                     for (let i = studentsList.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [studentsList[i], studentsList[j]] = [studentsList[j], studentsList[i]];
@@ -397,7 +376,6 @@
 
                     generateSchedule(true);
 
-                    // Reset button state
                     drawBtn.disabled = false;
                     drawBtn.classList.remove('opacity-75', 'cursor-not-allowed');
                     drawBtn.innerHTML = `<i class="fa-solid fa-shuffle"></i> 重新隨機抽籤`;
@@ -411,7 +389,7 @@
             }, intervalTime);
         }
 
-        // Generate final schedule calculations
+        // Generate Schedule calculation
         function generateSchedule(isAnimated = false) {
             calculateTotalDuration();
 
@@ -424,17 +402,13 @@
 
             studentsList.forEach((student, idx) => {
                 const seq = idx + 1;
-                
-                // Format Start Time
                 const startFormatted = `${String(currentHour).padStart(2, '0')}:${String(currentMin).padStart(2, '0')}`;
                 
-                // Add duration
                 currentMin += durationMin;
                 currentHour += Math.floor(currentMin / 60);
                 currentMin = currentMin % 60;
                 currentHour = currentHour % 24;
 
-                // Format End Time
                 const endFormatted = `${String(currentHour).padStart(2, '0')}:${String(currentMin).padStart(2, '0')}`;
                 const timeSlot = `${startFormatted} - ${endFormatted}`;
 
@@ -451,15 +425,12 @@
 
             renderTableRows(studentsList, false);
 
-            // Update footer time
             const now = new Date();
             document.getElementById('lastUpdatedText').innerText = now.toLocaleTimeString();
-
-            // Update print subheader
             document.getElementById('printSubHeader').innerText = `開始時間：${startTimeVal} | 每人考試時間：${durationMin} 分鐘 | 共 ${studentsList.length} 人`;
         }
 
-        // Render rows into HTML table
+        // Render HTML Table Rows
         function renderTableRows(list, isTempShuffling = false) {
             const tbody = document.getElementById('scheduleTableBody');
             tbody.innerHTML = '';
@@ -471,7 +442,6 @@
             list.forEach((studentName, idx) => {
                 const seq = idx + 1;
                 
-                // Calculate time on fly for rendering
                 const startStr = `${String(cHour).padStart(2, '0')}:${String(cMin).padStart(2, '0')}`;
                 cMin += durationMin;
                 cHour += Math.floor(cMin / 60);
@@ -508,7 +478,7 @@
             });
         }
 
-        // Copy formatted table data to Clipboard
+        // Copy Table Data to Clipboard
         function copyToClipboard() {
             if (currentSchedule.length === 0) return;
 
@@ -517,7 +487,6 @@
                 text += `${row.timeSlot}\t${row.seq}\t${row.name}\t${row.question}\n`;
             });
 
-            // Use execCommand copy fallback
             const textarea = document.createElement('textarea');
             textarea.value = text;
             document.body.appendChild(textarea);
@@ -533,11 +502,10 @@
             }
         }
 
-        // Export data as CSV File
+        // Export Data to CSV
         function exportCSV() {
             if (currentSchedule.length === 0) return;
 
-            // BOM for UTF-8 Excel Chinese compatibility
             let csvContent = "\uFEFF考試時間段,順序,學生姓名,試題組別\n";
 
             currentSchedule.forEach(row => {
@@ -548,7 +516,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `學生考試抽籤時間表_${new Date().toISOString().slice(0,10)}.csv`;
+            a.download = `學生考試抽籤時間表(二題組)_${new Date().toISOString().slice(0,10)}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -557,7 +525,7 @@
             showToast('已下載 CSV 檔案！');
         }
 
-        // Display Toast Notification
+        // Toast Message Utility
         function showToast(msg) {
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toastMsg');
